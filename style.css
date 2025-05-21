@@ -1,0 +1,101 @@
+/* Apply only to body and html for full-page background */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-image: url("finalbg2.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+.menu-buttons {
+  display: flex;
+  gap: 1cm; /* 1cm space between buttons */
+  margin-bottom: 5cm; /* 4cm from the bottom */
+}
+
+button {
+  font-family: "Creepster", cursive;
+  font-weight: 400;
+  font-size: 1.2rem;
+  padding: 20px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: hsl(0, 0%, 100%);
+  color: rgb(0, 0, 0);
+}
+
+button:hover {
+  background-color: #988e8c;
+  color: white;
+}
+/* Modal background */
+.playmode {
+  display: none; /* shown when start is clicked */
+  position: fixed;
+  top: 5cm;
+  left: 10cm;
+  width: 50%;
+  height: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  flex-direction: column;
+  font-family: "Nosifer", cursive;
+}
+
+/* Modal inner box */
+.playmode{
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;}
+
+/* Modal title */
+.playmode h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color:white;
+}
+
+/* Button container */
+.numplayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1cm;
+  margin-top: 3cm;
+}
+
+.numplayer button {
+  padding: 15px 22px;
+  font-size: 1.1rem;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 8px;
+  font-family: "Creepster", cursive;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.numplayer button:hover {
+  background-color:#7c7c7c;
+  box-shadow: 0 0 10px rgb(253, 252, 253);
+  color: black;
+}
+

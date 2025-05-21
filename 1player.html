@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Player vs Computer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background-color: #000000;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: whitesmoke;
+    }
+
+    #gameStatus {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: whitesmoke;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 10px;
+      justify-content: center;
+      margin: auto;
+    }
+
+    .cell {
+      background-color: #ffffff;
+      border: 2px solid #444;
+      font-size: 2em;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .cell:hover {
+      background-color: hsla(43, 94%, 86%, 0.842);
+      box-shadow: 0 0 10px rgb(232, 42, 9);
+      transform: scale(1.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .disabled {
+      pointer-events: none;
+      background-color: #e0e0e0;
+    }
+
+    #restartBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #restartBtn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>TIC-TAC-TOE</h1>
+  <div id="gameStatus">Player X's turn</div>
+  <div id="board"></div>
+  <button id="restartBtn" onclick="restartGame()">Restart Game</button>
+
+  <script>
+    const board = document.getElementById('board');
+    const gameStatus = document.getElementById('gameStatus');
+
+    let cells = Array(9).fill(null);
+    let gameOver = false;
+
+    function drawBoard() {
+      board.innerHTML = "";
+      cells.forEach((cell, i) => {
+        const div = document.createElement("div");
+        div.className = "cell";
+        div.textContent = cell || "";
+        if (cell || gameOver) {
+          div.classList.add("disabled");
+        } else {
+          div.addEventListener("click", () => playerMove(i));
+        }
+        board.appendChild(div);
+      });
+    }
+
+    function checkWinner(player) {
+      const winPatterns = [
+        [0,1,2], [3,4,5], [6,7,8],
+        [0,3,6], [1,4,7], [2,5,8],
+        [0,4,8], [2,4,6]
+      ];
+      return winPatterns.some(pattern =>
+        pattern.every(index => cells[index] === player)
+      );
+    }
+
+    function playerMove(index) {
+      if (gameOver || cells[index]) return;
+      cells[index] = 'X';
+      drawBoard();
+
+      if (checkWinner('X')) {
+        gameStatus.textContent = "Player X Wins! 🎉";
+        gameOver = true;
+        return;
+      }
+
+      if (cells.every(cell => cell !== null)) {
+        gameStatus.textContent = "It's a Draw!";
+        gameOver = true;
+        return;
+      }
+
+      gameStatus.textContent = "Computer's Turn...";
+      setTimeout(computerMove, 500);
+    }
+
+    function computerMove() {
+      let emptyIndices = cells.map((val, idx) => val === null ? idx : null).filter(v => v !== null);
+      if (emptyIndices.length === 0) return;
+
+      let randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+      cells[randomIndex] = 'O';
+      drawBoard();
+
+      if (checkWinner('O')) {
+        gameStatus.textContent = "Computer Wins! 😞";
+        gameOver = true;
+        return;
+      }
+
+      if (cells.every(cell => cell !== null)) {
+        gameStatus.textContent = "It's a Draw!";
+        gameOver = true;
+        return;
+      }
+
+      gameStatus.textContent = "Player X's turn";
+    }
+
+    function restartGame() {
+      cells = Array(9).fill(null);
+      gameOver = false;
+      gameStatus.textContent = "Player X's turn";
+      drawBoard();
+    }
+
+    drawBoard();
+  </script>
+
+</body>
+</html>
